@@ -3,3 +3,4 @@ EXTRA_CFLAGS += -Ilge/include
 
 obj-$(CONFIG_MACH_LGE_I_BOARD)	+= devices_lge.o
 obj-$(CONFIG_MACH_LGE_IJB_BOARD_SKT)	+= ijb_skt/
+obj-$(CONFIG_MACH_LGE_I_BOARD_VZW)	+= i_vzw/
