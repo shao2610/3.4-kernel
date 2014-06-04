@@ -1,0 +1,200 @@
+# Sensor driver configuration
+comment "Sensor driver Selection"
+config LGE_SENSOR
+	default y
+	bool "LGE Sensor Devices Common Configuration"
+	help
+		LGE Sensor Devices Common Configuration
+
+config LGE_SENSOR_FUSION
+	default y
+	bool "LGE Sensor Fusion Configuration"
+	help
+		LGE Sensor Fusion Configuration
+
+config LGE_SENSOR_ACCELEROMETER
+	default y
+	bool "LGE Accelerometer STM K3DH Configuration"
+	help
+		LGE Accelerometer STM K3DH Configuration
+		
+config LGE_SENSOR_GYROSCOPE
+	default y
+	bool "LGE Gyroscope STM K3GTR Configuration"
+	help
+		LGE Gyroscope STM K3GTR Configuration		
+		
+config LGE_SENSOR_DCOMPASS
+	default y
+	bool "LGE Digital Compass AICHI AMI306 Configuration"
+	help
+		LGE Digital Compass  AICHI AMI306 Configuration		
+
+config LGE_SENSOR_PROXIMITY
+	tristate "APDS9900 based proximity and light sensor"
+	help
+	  Say Y here if you have a sensor interface using the
+	  APDS9900 controller, and your board-specific
+	  setup code includes i2c devices.
+
+	  If unsure, say N (but it's safe to say "Y").
+config LGE_SENSOR_GP2AP
+	tristate "GP2AP based proximity sensor"
+	help
+	  Say Y here if you have a sensor interface using the
+	  GP2AP controller, and your board-specific
+	  setup code includes i2c devices.
+
+	  If unsure, say N (but it's safe to say "Y").
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called ads7846.
+
+config LGE_SENSOR_KR3DH
+	tristate "KR3DH based accelerometer sensor"
+	help
+	  Say Y here if you have a sensor interface using the
+	  KR3DH controller, and your board-specific
+	  setup code includes i2c devices.
+
+	  If unsure, say N (but it's safe to say "Y").
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called ads7846.
+
+config LGE_SENSOR_KR3DM
+	tristate "8bit accel data for KR3DM"
+	help
+	  Say Y here if you have a sensor interface using the
+	  KR3DM controller, and your board-specific
+	  setup code includes i2c devices.
+
+	  If unsure, say N (but it's safe to say "Y").
+	  
+config LGE_SENSOR_AK8973
+	tristate "AK8973 based ecompass sensor"
+	help
+	  Say Y here if you have a sensor interface using the
+	  AK8973 controller, and your board-specific
+	  setup code includes i2c devices.
+
+	  If unsure, say N (but it's safe to say "Y").
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called ads7846.
+
+config LGE_SENSOR_AMI304
+        tristate "AMI304 based gyro sensor"
+        help
+          Say Y here if you have a sensor interface using the
+          AMI304 controller, and your board-specific
+          setup code includes i2c devices.
+
+          If unsure, say N (but it's safe to say "Y").
+
+config LGE_HEADSET_DETECTION_FSA8008
+        tristate "Fairchild  FSA8008 headset detection"
+        help
+          This enables support for Fairchild  FSA8008 headset detection.          
+          
+config LGE_TOUCHSCREEN_MELFAS
+        tristate "MELFAS touchscreen driver"
+        depends on I2C
+        help
+        Say Y here if you have a MELFAS touchscreen.
+
+        If unsure, say N.
+
+config LGE_TOUCH_MELFAS_ISC
+	bool "TM1940"
+	depends on LGE_TOUCHSCREEN_MELFAS
+	help
+         Register map TM1940.
+
+config LGE_TOUCH_MELFAS_ISP
+	bool "TM1940"
+	depends on LGE_TOUCHSCREEN_MELFAS
+	help
+         Register map TM1940.
+
+config LGE_TOUCHSCREEN_SYNAPTICS_RMI4_I2C
+	tristate "Synaptics RMI4 protocol based I2C interface Touchscreen Driver"
+	help
+	  This enables support for Synaptics RMI4 protocol I2C interface Touchscreens.               
+choice
+	prompt "Register map"
+	depends on LGE_TOUCHSCREEN_SYNAPTICS_RMI4_I2C
+
+config LGE_TOUCH_REG_MAP_TM1804
+	bool "TM1804"
+	depends on LGE_TOUCHSCREEN_SYNAPTICS_RMI4_I2C && MACH_LGE_I_BOARD_VZW
+	help
+         Register map TM1804. 
+
+ config LGE_TOUCH_REG_MAP_TM1898
+	bool "TM1898"
+	help
+         Register map TM1898. use for cayman mpcs
+         
+ config LGE_TOUCH_REG_MAP_TM1992
+	bool "TM1992"
+	help
+         Register map TM1992. use for cayman vzw
+
+config LGE_TOUCH_REG_MAP_TM1814
+	bool "TM1814"
+	depends on LGE_TOUCHSCREEN_SYNAPTICS_RMI4_I2C && MACH_LGE_IJB_BOARD_SKT
+	help
+         Register map TM1814. 
+
+config LGE_TOUCH_REG_MAP_TM1995
+	bool "TM1995"
+	depends on LGE_TOUCHSCREEN_SYNAPTICS_RMI4_I2C  && (MACH_LGE_I_BOARD_LGU || MACH_LGE_I_BOARD_DCM ||MACH_LGE_IJB_BOARD_LGU)
+	help
+         Register map TM1995. 
+endchoice
+
+config LGE_TOUCH_CHAGER_CTRL
+	default y
+	bool "Synaptics Charger Control"
+	depends on LGE_TOUCHSCREEN_SYNAPTICS_RMI4_I2C && MACH_LGE_I_BOARD
+	help
+	  This enables charger contrl for Synaptics.               
+
+config LGE_TOUCHSCREEN_CORE_IJB
+	tristate "LG touchscreen core driver for IJB"
+        depends on I2C && MACH_LGE_I_BOARD
+        help
+        Say Y here if you LG.
+
+        If unsure, say N.
+
+config LGE_TOUCH_SYNAPTICS_IJB
+        tristate "IJB Synaptics touchscreen driver"
+        depends on I2C && MACH_LGE_I_BOARD
+	help
+        Say Y here if you have a Synaptics touchscreen.
+
+        If unsure, say N.
+
+config LGE_TOUCH_SYNAPTICS_IJB_FW_UPGRADE
+	bool "Synaptics ClearPad IJB F/W upgrade"
+	depends on LGE_TOUCHSCREEN_SYNAPTICS_RMI4_I2C
+	help
+	  This enables support for Synaptics general F/W upgrade.
+
+config TOUCHSCREEN_SWEEP2WAKE
+	tristate "Sweep2Wake for touchscreens"
+	select TOUCHSCREEN_PREVENT_SLEEP
+	default n
+
+config TOUCHSCREEN_DOUBLETAP2WAKE
+	tristate "DoubleTap2Wake for touchscreens"
+	select TOUCHSCREEN_PREVENT_SLEEP
+	default n
+
+config TOUCHSCREEN_PREVENT_SLEEP
+	bool "Inihibit sleep on modified touchscreen drivers"
+	default n
+	help
+	  This disables the sleep function of modified touchscreen drivers.

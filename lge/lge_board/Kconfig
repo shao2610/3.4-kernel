@@ -1,0 +1,18 @@
+config MACH_LGE_I_BOARD
+       bool "LGE_I_BOARD"
+       depends on ARCH_MSM8X60
+       default n
+       ---help---
+         LGE I-project. 
+
+choice
+	prompt "LGE board type"
+	default MACH_LGE_IJB_BOARD_SKT
+
+config MACH_LGE_IJB_BOARD_SKT
+       bool "LGE_IJB_BOARD_SKT"
+       depends on MACH_LGE_I_BOARD
+       ---help---
+         LGE IJB-project for SKT.         
+
+endchoice

@@ -1,0 +1,31 @@
+config LGE_CAMERA
+	default y
+	bool "LGE Camera Configuration"
+	help
+		LGE CAMERA Configuration
+
+
+comment "Camera Sensor Selection"
+
+config LGE_SENSOR_IMX105
+	bool "Sensor IMX105 8MP MIPI (BAYER 8M)"
+	depends on LGE_CAMERA && ARCH_MSM8X60
+	default y
+	---help---
+	SONY 8M Bayer MIPI Sensor with Autofocus
+	  	  
+config LGE_SENSOR_MT9M114
+	bool "Sensor MT9M114 1.26MP MIPI (SOC 1.26M)"
+	depends on LGE_CAMERA && ARCH_MSM8X60
+	default y
+	---help---
+	APTINA 1.26M SOC MIPI Sensor without Autofocus	
+
+comment "Camera flash Selection"
+	  	  
+config LGE_FLASH_LM3559
+	bool "LM3559 flash support"
+	#depends on LGE_CAMERA && ARCH_MSM8X60
+	default y
+	---help---
+	  Enable support for LM3559 flash for msm camera
