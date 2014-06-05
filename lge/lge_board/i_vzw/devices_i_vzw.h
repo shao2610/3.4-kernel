@@ -70,12 +70,16 @@
 
 /* gpio and clock control for vibrator */
 #define GPIO_LIN_MOTOR_EN		        158
+#if 0 //defined(CONFIG_LGE_MACH_BOARD_REVB) && !defined(CONFIG_LGE_LGT_AUDIO)
 #define GPIO_LIN_MOTOR_PWM	        	31
+#else
+#define GPIO_LIN_MOTOR_PWM	        	29
+#endif
 
 /* MIC BIAS configuration */
 #define OTHC_MICBIAS_MAIN     OTHC_MICBIAS_0
-#define OTHC_MICBIAS_SUB      OTHC_MICBIAS_1
-#define OTHC_MICBIAS_HEADSET  OTHC_MICBIAS_2
+#define OTHC_MICBIAS_SUB      OTHC_MICBIAS_2
+#define OTHC_MICBIAS_HEADSET  OTHC_MICBIAS_1
 
 #ifdef CONFIG_LGE_TOUCHSCREEN_SYNAPTICS_RMI4_I2C
 #define MSM_GSBI1_QUP_I2C_BUS_ID  10
@@ -107,8 +111,8 @@ extern struct platform_device msm_pcm_hostless;
 #ifdef CONFIG_SPI_QUP
 extern struct platform_device msm_gsbi1_qup_spi_device;
 extern struct platform_device msm_gsbi10_qup_spi_device;
-#ifdef CONFIG_LGE_BROADCAST_TDMB
-extern struct platform_device msm_gsbi11_qup_spi_device;	
+#ifdef CONFIG_LGE_BROADCAST
+extern struct platform_device msm_gsbi11_qup_spi_device;	//LGE_BROADCAST SPI
 #endif
 #endif
 

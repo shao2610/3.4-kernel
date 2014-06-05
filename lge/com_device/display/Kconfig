@@ -6,11 +6,22 @@ config LGE_BACKLIGHT_LM3530
 	---help---
 	LGE backlight management (lm3530)
 
+config LGE_BACKLIGHT_LM3537
+	bool "select lm3537 device as LGE backlight management for cayman "
+	default y
+	---help---
+	LGE backlight management (lm3537)
 config LGE_DISPLAY_MIPI_LGIT_IJB_VIDEO_HD_PT
 	bool "LGE_DISPLAY_MIPI_LGIT_IJB_VIDEO_HD_PT"
 	select FB_MSM_MIPI_DSI
 	---help---
-	LGE display management
+	LGE display management 
+	
+config LGE_DISPLAY_MIPI_LGD_VIDEO_WVGA_PT
+	bool "LGE_DISPLAY_MIPI_LGD_VIDEO_WVGA_PT"
+	select FB_MSM_MIPI_DSI
+	---help---
+	LGE display management 
 
 config MSM_CAF_DISPLAY
 	depends on ARCH_MSM8X60
@@ -92,5 +103,11 @@ config LGE_SHOW_FB_BOOTLOGO
 	depends on MACH_LGE_120_BOARD
 	---help---
 	Select this feature to show boot animation from the frame buffer driver
+
+config LGE_K_CAL
+	bool "K_calibration for lcd tunning"
+	default n
+	---help---
+	select this feature for kcal function enable 
 
 endmenu

@@ -12,7 +12,9 @@ ifeq ($(CONFIG_MSM_CAMERA_V4L2),y)
   obj-$(CONFIG_LGE_SENSOR_IMX105)+= sensor_imx105_v4l2.o  
   obj-$(CONFIG_LGE_SENSOR_MT9M114)+= sensor_mt9m114_v4l2.o  
 else
-  obj-$(CONFIG_LGE_SENSOR_IMX105)+= sensor_imx105.o sensor_imx105_reg.o
+obj-$(CONFIG_LGE_SENSOR_IMX105)+= sensor_imx105.o sensor_imx105_reg.o
+obj-$(CONFIG_LGE_SENSOR_MT9P017)+= sensor_mt9p017.o sensor_mt9p017_reg.o
+obj-$(CONFIG_LGE_SENSOR_MT9V113)+= sensor_mt9v113.o sensor_mt9v113_reg.o
   obj-$(CONFIG_LGE_SENSOR_MT9M114)+= sensor_mt9m114.o sensor_mt9m114_reg.o  
 endif
 

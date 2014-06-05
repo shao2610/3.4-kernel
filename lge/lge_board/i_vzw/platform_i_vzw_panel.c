@@ -68,7 +68,7 @@
 #elif defined(CONFIG_FB_MSM_TVOUT)
 #define MSM_FB_EXT_BUF_SIZE  (720 * 576 * 2 * 2) /* 2 bpp x 2 pages */
 #else
-#define MSM_FB_EXT_BUFT_SIZE	0
+#define MSM_FB_EXT_BUF_SIZE	0
 #endif
 
 #define MSM_FB_EXT_BUF_CAPTION_SIZE (0)
@@ -100,7 +100,7 @@ unsigned char hdmi_is_primary;
 #define MSM_FB_OVERLAY1_WRITEBACK_SIZE (0)
 #endif  /* CONFIG_FB_MSM_OVERLAY1_WRITEBACK */
 
-#define MIPI_VIDEO_LGIT_PANEL_NAME		"mipi_video_lgit_wvga"
+#define MIPI_VIDEO_LGD_PANEL_NAME		"mipi_video_lgd_wvga"
 #define HDMI_PANEL_NAME	"hdmi_msm"
 #define TVOUT_PANEL_NAME	"tvout_msm"
 
@@ -113,8 +113,8 @@ static struct resource msm_fb_resources[] = {
 
 static int msm_fb_detect_panel(const char *name)
 {
-	if (!strncmp(name, MIPI_VIDEO_LGIT_PANEL_NAME,
-			strnlen(MIPI_VIDEO_LGIT_PANEL_NAME,
+	if (!strncmp(name, MIPI_VIDEO_LGD_PANEL_NAME,
+			strnlen(MIPI_VIDEO_LGD_PANEL_NAME,
 				PANEL_NAME_MAX_LEN)))
 		return 0;
 
@@ -204,29 +204,29 @@ static void mipi_config_gpio(int on)
 	}
 }
 
-#ifdef CONFIG_LGE_DISPLAY_MIPI_LGIT_IJB_VIDEO_HD_PT
-extern void lm3530_lcd_backlight_set_level( int level);
-static int mipi_lgit_backlight_level(int level, int max, int min)
+#ifdef CONFIG_LGE_DISPLAY_MIPI_LGD_VIDEO_WVGA_PT
+extern void lm3537_lcd_backlight_set_level( int level);
+static int mipi_lgd_backlight_level(int level, int max, int min)
 {
-	lm3530_lcd_backlight_set_level(level);
+	lm3537_lcd_backlight_set_level(level);
 
 	return 0;
 }
 
-static struct msm_panel_common_pdata mipi_lgit_pdata = {
-	.backlight_level = mipi_lgit_backlight_level,
+static struct msm_panel_common_pdata mipi_lgd_pdata = {
+	.backlight_level = mipi_lgd_backlight_level,
 	.panel_config_gpio = mipi_config_gpio,
 #ifdef CONFIG_LGIT_VIDEO_CABC
-	.bl_pwm_disable = lm3530_lcd_backlight_pwm_disable,
-	.bl_on_status = lm3530_lcd_backlight_on_status,
+	.bl_pwm_disable = lm3537_lcd_backlight_pwm_disable,
+	.bl_on_status = lm3537_lcd_backlight_on_status,
 #endif
 };
 
-static struct platform_device mipi_dsi_lgit_panel_device = {
-	.name = "mipi_lgit",
+static struct platform_device mipi_dsi_lgd_panel_device = {
+	.name = "mipi_lgd",
 	.id = 0,
 	.dev = {
-		.platform_data = &mipi_lgit_pdata,
+		.platform_data = &mipi_lgd_pdata,
 	}
 };
 #endif
@@ -332,7 +332,7 @@ power_error:
 }
 #endif
 
-#if defined(CONFIG_LGE_DISPLAY_MIPI_HITACHI_VIDEO_HD_PT) || defined(CONFIG_LGE_DISPLAY_MIPI_LGIT_VIDEO_HD_PT)
+#if defined(CONFIG_LGE_DISPLAY_MIPI_HITACHI_VIDEO_HD_PT) || defined(CONFIG_LGE_DISPLAY_MIPI_LGIT_VIDEO_HD_PT)|| defined(CONFIG_LGE_DISPLAY_MIPI_LGD_VIDEO_WVGA_PT)
 void mipi_dsi_panel_power_off_shutdown(void)
 {
 	mipi_dsi_panel_power(0);
@@ -387,8 +387,8 @@ static struct platform_device *panel_devices[] __initdata = {
 
 #ifdef CONFIG_FB_MSM_MIPI_DSI
 
-#ifdef CONFIG_LGE_DISPLAY_MIPI_LGIT_IJB_VIDEO_HD_PT
-	&mipi_dsi_lgit_panel_device,
+#ifdef CONFIG_LGE_DISPLAY_MIPI_LGD_VIDEO_WVGA_PT
+	&mipi_dsi_lgd_panel_device,
 #else
 	&mipi_dsi_sharp_panel_device,
 #endif /*CONFIG_FB_MSM_MIPI_LGIT_VIDEO_HD_PT */
@@ -403,7 +403,7 @@ void __init msm_panel_init(void){
 	platform_add_devices(panel_devices, ARRAY_SIZE(panel_devices));
 }
 
-static struct backlight_platform_data lm3530_data = {
+static struct backlight_platform_data lm3537_data = {
 	.gpio = 49,
 	.max_current = 0xb7, //0x17, // CABC
 
@@ -417,8 +417,8 @@ static struct backlight_platform_data lm3530_data = {
 	0xBB = 26 mA full-scale current
 	0xBF= 29.5 mA full-scale current
 	*/
-	.min_brightness = 0x00,// 0x05, //0x09,
-	.max_brightness = 0x71,
+	.min_brightness = 25,// 0x05, //0x09,
+	.max_brightness = 128,
 };
 	
 struct i2c_registry {
@@ -428,11 +428,11 @@ struct i2c_registry {
 	int                    len;
 };
 
-#define LM3530_BACKLIGHT_ADDRESS 0x38
+#define LM3537_BACKLIGHT_ADDRESS 0x38
 static struct i2c_board_info msm_i2c_backlight_info[] = {
 	{
-		I2C_BOARD_INFO("lm3530", LM3530_BACKLIGHT_ADDRESS),
-		.platform_data = &lm3530_data,
+		I2C_BOARD_INFO("lm3537", LM3537_BACKLIGHT_ADDRESS),
+		.platform_data = &lm3537_data,
 	}
 };
 
